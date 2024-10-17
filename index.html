@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PubQuizzzz Interactieve Quiz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <h1>PubQuizzzz</h1>
+    </div>
+
+    <!-- Naam en categorie invoer -->
+    <div class="name-input-container">
+      <input type="text" id="name-input" class="name-input" placeholder="Voer je naam in">
+
+      <div class="category-container">
+        <label for="category">Kies een categorie:</label>
+        <select id="category" class="category-select">
+          <option value="" disabled selected>Selecteer een categorie</option>
+          <option value="sport">Sport</option>
+          <option value="natuur">Natuur</option>
+          <option value="films">Films</option>
+          <option value="eten">Eten</option>
+          <option value="muziek">Muziek</option>
+        </select>
+      </div>
+
+      <button class="start-btn" id="start-btn">Start Quiz</button>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-bar"></div>
+    </div>
+
+    <div class="question-container" style="display: none;">
+      <p class="question">Vraag komt hier...</p>
+      <ul class="choices">
+        <!-- Opties komen hier -->
+      </ul>
+    </div>
+
+    <button id="submit-btn" style="display: none;">Volgende Vraag</button>
+    
+    <div class="result-container" style="display: none;">
+      <p class="result"></p>
+      <p class="feedback" id="feedback"></p>
+      <div class="leaderboard">
+        <h2></h2>
+        <ul id="leaderboard-list">
+          <!-- Ranglijst komt hier -->
+        </ul>
+      </div>
+    </div>
+
+    <button id="restart-btn" style="display: none;">Opnieuw Starten</button>
+
+    <!-- Knop naar leaderboardpagina -->
+    <div class="leaderboard-link-container" style="margin-top: 20px;">
+      <button id="leaderboard-btn" class="btn">Bekijk Ranglijst</button>
+    </div>
+  </div>
+
+  <script>
+    // Verwijzen naar leaderboardpagina
+    document.getElementById('leaderboard-btn').addEventListener('click', function() {
+      window.location.href = 'leaderboard.html'; // Verwijst naar de nieuwe leaderboardpagina
+    });
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>
