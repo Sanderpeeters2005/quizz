@@ -8,12 +8,12 @@ const quizData = {
       {
         question: "Wie won het meest recent de UEFA Champions League?",
         choices: ["Manchester City", "Real Madrid", "Liverpool", "Bayern München"],
-        correct: "Manchester City"
+        correct: "Real madrid"
       },
       {
         question: "Wie is de topscorer aller tijden in het WK voetbal?",
-        choices: ["Pele", "Diego Maradona", "Ronaldo", "Marta"],
-        correct: "Ronaldo"
+        choices: ["Pele", "Diego Maradona", "Ronaldo", "Miroslav Klose"],
+        correct: "Miroslav Klose"
       },
       {
         question: "Welk land won de meeste Olympische medailles?",
@@ -79,8 +79,8 @@ const quizData = {
       },
       {
         question: "Wat is de grootste woestijn ter wereld?",
-        choices: ["Sahara", "Arabische woestijn", "Gobi", "Kalahari"],
-        correct: "Sahara"
+        choices: ["Sahara", "Arabische woestijn", "Antartica", "Kalahari"],
+        correct: "Antartica"
       },
       {
         question: "Welke soort dier is een koraal?",
@@ -94,8 +94,8 @@ const quizData = {
       },
       {
         question: "Wat is de grootste soort schildpad?",
-        choices: ["Zee schildpad", "Galapagos schildpad", "Landschildpad", "Kleinschildpad"],
-        correct: "Galapagos schildpad"
+        choices: ["Zee schildpad", "Galapagos schildpad", "Landschildpad", "Lederschildpad"],
+        correct: "Lederschildpad"
       },
       {
         question: "Wat is de levensduur van een gemiddelde huismus?",
@@ -231,7 +231,7 @@ const quizData = {
       {
         question: "Wat is het bekendste nummer van Michael Jackson?",
         choices: ["Billie Jean", "Thriller", "Beat It", "Bad"],
-        correct: "Thriller"
+        correct: "Billie Jean"
       },
       {
         question: "Welke band heeft het nummer 'Stairway to Heaven' uitgebracht?",
@@ -241,7 +241,7 @@ const quizData = {
       {
         question: "Wie won de Grammy voor Album van het Jaar in 2020?",
         choices: ["Billie Eilish", "Taylor Swift", "Ariana Grande", "Lizzo"],
-        correct: "Billie Eilish"
+        correct: "Taylor Swift"
       },
       {
         question: "Wat is het hoofddoel van muziek?",
