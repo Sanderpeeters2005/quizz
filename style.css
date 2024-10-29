@@ -177,6 +177,24 @@ body {
     font-weight: bold;
   }
   
+#leaderboard-btn{
+  background-color: #006323; /* Geel */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 25%;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+  
+#leaderboard-btn:hover{
+  background-color: #23c63e; /* Donker geel */
+}
   #submit-btn:hover, #restart-btn:hover {
     background-color: #c91414;
   }
