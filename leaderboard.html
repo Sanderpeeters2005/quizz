@@ -3,49 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leaderboard</title>
+  <title>PubQuizzzz Leaderboard</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="quiz-container">
-    <div class="quiz-header">
-      <h1>Leaderboard</h1>
-    </div>
+  <div class="leaderboard-container">
+    <h1>Leaderboard</h1>
+    <ul id="leaderboard-list">
+      <!-- Ranglijst komt hier -->
+    </ul>
 
-    <div class="leaderboard-container">
-      <h2>Ranglijst</h2>
-      <ul id="leaderboardList">
-        <!-- Hier komt de ranglijst te staan -->
-      </ul>
-    </div>
+    <!-- Knop om de ranglijst te wissen -->
+    <button id="clear-leaderboard-btn" class="btn">Leaderboard wissen</button>
 
-    <div style="margin-top: 20px;">
-      <button onclick="window.location.href='index.html';" class="btn">Terug naar Quiz</button>
+    <!-- Knop om terug te keren naar de quiz -->
+    <div class="back-btn-container" style="margin-top: 20px;">
+      <button id="back-btn" class="btn">Terug naar Quiz</button>
     </div>
-
   </div>
 
   <script>
-    // Dit is een voorbeeld van hoe je de leaderboard kan weergeven
-    const leaderboardList = document.getElementById('leaderboard-list');
-    
-    function updateLeaderboard() {
-      // Ranglijst ophalen uit localStorage (of een database)
-      const leaderboard = JSON.parse(DB.getItem('leaderboard')) || [];
-      leaderboard.innerHTML = 'Deze code weghalen';
+    // Functie om de leaderboard op te halen en weer te geven
+    function displayLeaderboard() {
+      const leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+      const leaderboardList = document.getElementById('leaderboard-list');
+      leaderboardList.innerHTML = "";
+
+      // Sorteer op score, hoogste eerst
+      leaderboard.sort((a, b) => b.score - a.score);
 
       leaderboard.forEach(entry => {
-
         const li = document.createElement('li');
-        li.textContent = `${entry.name}: ${entry.score}`;
+        li.innerHTML = `${entry.name}: <span>${entry.score}</span>`;
         leaderboardList.appendChild(li);
       });
-      alert("we zijn hier");
     }
 
-    updateLeaderboard();
-  </script>
+    // Functie om de ranglijst te wissen
+    function clearLeaderboard() {
+      localStorage.removeItem('leaderboard');
+      displayLeaderboard(); // Update de weergave na wissen
+    }
 
+    // Event listener om de ranglijst te wissen
+    document.getElementById('clear-leaderboard-btn').addEventListener('click', clearLeaderboard);
+
+    // Event listener om terug te keren naar de quizpagina
+    document.getElementById('back-btn').addEventListener('click', function() {
+      window.location.href = 'index.html'; // Terug naar de quizpagina
+    });
+
+    // Laad de leaderboard bij het openen van de pagina
+    displayLeaderboard();
+  </script>
 </body>
 </html>

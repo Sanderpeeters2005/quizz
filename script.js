@@ -262,191 +262,136 @@ const quizData = {
   };
   
   let currentQuestion = 0;
-  let score = 0;
-  let userName = "";
-  let selectedCategory = "";
-  
-  const nameInput = document.getElementById('name-input');
-  const startBtn = document.getElementById('start-btn');
-  const categorySelect = document.getElementById('category');
-  const questionEl = document.querySelector('.question');
-  const choicesEl = document.querySelector('.choices');
-  const submitBtn = document.getElementById('submit-btn');
-  const resultContainer = document.querySelector('.result-container');
-  const resultEl = document.querySelector('.result');
-  const feedbackEl = document.getElementById('feedback');
-  const progressBar = document.querySelector('.progress-bar');
-  const questionContainer = document.querySelector('.question-container');
-  const leaderboardList = document.getElementById('leaderboard-list');
-  const restartBtn = document.getElementById('restart-btn');
-  
-  // Start de quiz
-  startBtn.addEventListener('click', () => {
+let score = 0;
+let userName = "";
+let selectedCategory = "";
+
+const nameInput = document.getElementById('name-input');
+const startBtn = document.getElementById('start-btn');
+const categorySelect = document.getElementById('category');
+const questionEl = document.querySelector('.question');
+const choicesEl = document.querySelector('.choices');
+const submitBtn = document.getElementById('submit-btn');
+const resultContainer = document.querySelector('.result-container');
+const resultEl = document.querySelector('.result');
+const feedbackEl = document.getElementById('feedback');
+const progressBar = document.querySelector('.progress-bar');
+const questionContainer = document.querySelector('.question-container');
+const leaderboardList = document.getElementById('leaderboard-list');
+const restartBtn = document.getElementById('restart-btn');
+
+// Start de quiz
+startBtn.addEventListener('click', () => {
     const enteredName = nameInput.value.trim();
     if (enteredName === "") {
-      alert("Voer je naam in om de quiz te starten.");
-      return;
+        alert("Voer je naam in om de quiz te starten.");
+        return;
     }
-  
+
     userName = enteredName;
     selectedCategory = categorySelect.value; // Haal de gekozen categorie op
     if (!selectedCategory) {
-      alert("Selecteer een categorie om de quiz te starten.");
-      return;
+        alert("Selecteer een categorie om de quiz te starten.");
+        return;
     }
-  
+
     document.querySelector('.name-input-container').style.display = "none";
     questionContainer.style.display = "block";
     submitBtn.style.display = "block";
     restartBtn.style.display = "none";
-  
+
     loadQuestion();
-  });
-  
-  // Laad de huidige vraag op basis van de geselecteerde categorie
-  function loadQuestion() {
+});
+
+// Laad de huidige vraag op basis van de geselecteerde categorie
+function loadQuestion() {
     const currentQuiz = quizData[selectedCategory][currentQuestion]; // Laad vragen per categorie
     questionEl.innerText = currentQuiz.question;
     choicesEl.innerHTML = '';
-  
+
     currentQuiz.choices.forEach((choice, index) => {
-      const li = document.createElement('li');
-      li.innerHTML = `
-        <input type="radio" name="choice" id="choice${index}" value="${choice}">
-        <label for="choice${index}">${choice}</label>
-      `;
-      choicesEl.appendChild(li);
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <input type="radio" name="choice" id="choice${index}" value="${choice}">
+            <label for="choice${index}">${choice}</label>
+        `;
+        choicesEl.appendChild(li);
     });
-  
+
     updateProgressBar();
-  }
-  
-  // Controleer antwoord
-  submitBtn.addEventListener('click', checkAnswer);
-  
-  function checkAnswer() {
+}
+
+// Controleer antwoord
+submitBtn.addEventListener('click', checkAnswer);
+
+function checkAnswer() {
     const selectedOption = document.querySelector('input[name="choice"]:checked');
-  
+
     if (selectedOption) {
-      const answer = selectedOption.value;
-  
-      if (answer === quizData[selectedCategory][currentQuestion].correct) { // Controleer per categorie
-        score++;
-      }
-  
-      currentQuestion++;
-  
-      if (currentQuestion < quizData[selectedCategory].length) {
-        loadQuestion();
-      } else {
-        showResult();
-        saveScore(); // Sla de score op in de database
-      }
+        const answer = selectedOption.value;
+
+        if (answer === quizData[selectedCategory][currentQuestion].correct) { // Controleer per categorie
+            score++;
+        }
+
+        currentQuestion++;
+
+        if (currentQuestion < quizData[selectedCategory].length) {
+            loadQuestion();
+        } else {
+            showResult();
+        }
     } else {
-      alert("Selecteer een antwoord om door te gaan.");
+        alert("Selecteer een antwoord om door te gaan.");
     }
-  }
-  
-  // Toon het resultaat na afloop
-  function showResult() {
+}
+
+// Toon het resultaat na afloop
+function showResult() {
     questionContainer.style.display = "none";
     submitBtn.style.display = "none";
     resultContainer.style.display = "block";
-  
+
     resultEl.innerText = `Je hebt ${score} van de ${quizData[selectedCategory].length} vragen goed!`;
     feedbackEl.innerText = score === quizData[selectedCategory].length ? "Geweldig gedaan!" : "Goed geprobeerd!";
     restartBtn.style.display = "block";
-  
-    fetchLeaderboard(); // Laad de ranglijst
-  }
-  
-  // Voortgangsbalk updaten
-  function updateProgressBar() {
+
+    saveScoreToLeaderboard(userName, score); // Sla de score op in localStorage
+    displayLeaderboard(); // Toon de bijgewerkte ranglijst
+}
+
+// Voortgangsbalk updaten
+function updateProgressBar() {
     const progressPercentage = ((currentQuestion + 1) / quizData[selectedCategory].length) * 100;
     progressBar.style.width = `${progressPercentage}%`;
-  }
-  
-  // Herstart de quiz
-  restartBtn.addEventListener('click', () => {
+}
+
+// Herstart de quiz
+restartBtn.addEventListener('click', () => {
     currentQuestion = 0;
     score = 0;
     resultContainer.style.display = "none";
     nameInput.value = "";
     document.querySelector('.name-input-container').style.display = "block";
-  });
-  
-  // Functie om de ranglijst op te halen en weer te geven
-  function fetchLeaderboard() {
-    fetch('get_leaderboard.php')
-      .then(response => response.json())
-      .then(data => {
-        displayLeaderboard(data);
-      })
-      .catch(error => {
-        console.error('Error fetching leaderboard:', error);
-      });
-  }
-  
-  // Functie om de ranglijst weer te geven op de pagina
-  function displayLeaderboard(leaderboard) {
+});
+
+// Sla de naam en score op in localStorage
+function saveScoreToLeaderboard(name, score) {
+    const leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+    leaderboard.push({ name, score });
+    localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+}
+
+// Functie om de ranglijst weer te geven op de pagina
+function displayLeaderboard() {
     const leaderboardContainer = document.getElementById('leaderboard-list');
+    const leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+
     leaderboardContainer.innerHTML = ''; // Maak de huidige lijst leeg
-  
+
     leaderboard.forEach(entry => {
-      const li = document.createElement('li');
-      li.textContent = `${entry.username}: ${entry.score}`;
-      leaderboardContainer.appendChild(li);
+        const li = document.createElement('li');
+        li.textContent = `${entry.name}: ${entry.score}`;
+        leaderboardContainer.appendChild(li);
     });
-  }
-  
-  // Sla de score op in de database
-  function saveScore() {
-    const data = {
-      username: userName,
-      score: score
-    };
-  
-    fetch('save_score.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Score saved successfully:', data);
-    })
-    .catch(error => {
-      console.error('Error saving score:', error);
-    });
-  }
-  function showResult() {
-    questionContainer.style.display = "none";
-    submitBtn.style.display = "none";
-    resultContainer.style.display = "block";
-
-    resultEl.innerText = `Je hebt ${score} van de ${quizData[selectedCategory].length} vragen goed!`;
-    feedbackEl.innerText = score === quizData[selectedCategory].length ? "Geweldig gedaan!" : "Goed geprobeerd!";
-    restartBtn.style.display = "block";
-
-    // Sla de score en naam op in de database
-    saveScore(userName, score);
 }
-
-function saveScore(name, score) {
-    fetch('save_score.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name: name, score: score })
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-    })
-    .catch(error => console.error('Error:', error));
-}
-
-  
