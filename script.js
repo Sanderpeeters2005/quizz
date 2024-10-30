@@ -8,7 +8,7 @@ const quizData = {
       {
         question: "Wie won het meest recent de UEFA Champions League?",
         choices: ["Manchester City", "Real Madrid", "Liverpool", "Bayern München"],
-        correct: "Real madrid"
+        correct: "Real Madrid"
       },
       {
         question: "Wie is de topscorer aller tijden in het WK voetbal?",
