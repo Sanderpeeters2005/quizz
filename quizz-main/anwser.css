@@ -1,0 +1,99 @@
+/* Algemeen */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Antwoorden Container */
+.answer-container {
+    background-color: white;
+    border-radius: 15px;
+    padding: 15px; /* Verminder padding verder */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    max-width: 450px; /* Maak de breedte kleiner */
+    width: 90%; /* Zorg ervoor dat het responsive is */
+    text-align: center;
+}
+
+/* Koptekst */
+.answer-container h1 {
+    font-size: 22px; /* Verminder de font-grootte */
+    margin-bottom: 10px; /* Verminder de marge */
+    color: #bc0909;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Lijst met Antwoorden */
+#answers-list {
+    margin-bottom: 10px; /* Verminder marge */
+    text-align: left;
+}
+
+/* Antwoord Item */
+.answer-item {
+    background-color: #bbdefb;
+    padding: 8px; /* Verminder padding */
+    border-radius: 8px;
+    margin-bottom: 5px; /* Verminder marge */
+    transition: background-color 0.3s ease;
+}
+
+.answer-item:hover {
+    background-color: #90caf9;
+}
+
+/* Vraag en Antwoord Styling */
+.answer-item p {
+    margin: 3px 0; /* Verminder marge */
+}
+
+.answer-item strong {
+    color: #1976d2;
+}
+
+.answer-item em {
+    color: #3dc628;
+}
+
+/* Terug naar Startpagina Knop */
+button {
+    background-color: #bc0909; /* Rode achtergrond */
+    color: white;
+    border: none;
+    padding: 12px 15px; /* Verminder padding */
+    font-size: 14px; /* Verminder de knop tekstgrootte */
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-top: 15px; /* Verminder de marge */
+}
+
+button:hover {
+    background-color: #ff0505; /* Donkerder rood bij hover */
+}
+
+/* Responsieve Aanpassingen */
+@media (max-width: 600px) {
+    .answer-container {
+        max-width: 90%; /* Maak het breder op kleinere schermen */
+    }
+
+    .answer-container h1 {
+        font-size: 20px; /* Verminder de font-grootte op kleine schermen */
+    }
+
+    button {
+        font-size: 14px; /* Verminder de knop tekstgrootte */
+        padding: 10px; /* Verminder padding */
+    }
+}
