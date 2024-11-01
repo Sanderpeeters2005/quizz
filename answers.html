@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juiste Antwoorden</title>
+    <link rel="stylesheet" href="anwser.css">
+</head>
+<body>
+
+
+<div class="answer-container">
+    <h1>Juiste Antwoorden</h1>
+    <div id="answers-list">
+        <!-- De lijst met vragen en antwoorden komt hier -->
+    </div>
+    <button onclick="window.location.href='index.html'">Terug naar Startpagina</button>
+</div>
+
+<script>
+    // Haal de quizdata op van de voltooide quiz
+    const answers = JSON.parse(localStorage.getItem('quizAnswers')) || [];
+
+    // Verwijder de data uit localStorage zodra deze wordt opgehaald
+    localStorage.removeItem('quizAnswers');
+
+    // Vul de antwoorden in op de pagina
+    const answersList = document.getElementById('answers-list');
+    
+    if (answers.length > 0) {
+        answers.forEach((item, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.classList.add('answer-item');
+            questionDiv.innerHTML = `
+                <p><strong>Vraag ${index + 1}:</strong> ${item.question}</p>
+                <p><em>Juiste antwoord:</em> ${item.correct}</p>
+            `;
+            answersList.appendChild(questionDiv);
+        });
+    } else {
+        answersList.innerHTML = "<p>Geen antwoorden schikbaar. Start de quiz opnieuw om de antwoorden te zien.</p>";
+    }
+</script>
+
+</body>
+</html>

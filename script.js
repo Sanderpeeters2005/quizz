@@ -395,3 +395,48 @@ function displayLeaderboard() {
         leaderboardContainer.appendChild(li);
     });
 }
+// Voeg deze regel bovenaan toe om antwoorden op te slaan
+let quizAnswers = [];
+
+// Pas de functie `loadQuestion` aan om de huidige vraag en het juiste antwoord op te slaan
+function loadQuestion() {
+    const currentQuiz = quizData[selectedCategory][currentQuestion];
+
+    // Sla de vraag en het juiste antwoord op
+    quizAnswers.push({
+        question: currentQuiz.question,
+        correct: currentQuiz.correct
+    });
+
+    questionEl.innerText = currentQuiz.question;
+    choicesEl.innerHTML = '';
+
+    currentQuiz.choices.forEach((choice, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <input type="radio" name="choice" id="choice${index}" value="${choice}">
+            <label for="choice${index}">${choice}</label>
+        `;
+        choicesEl.appendChild(li);
+    });
+
+    updateProgressBar();
+}
+
+// Wijzig de functie `showResult` om de juiste antwoorden op te slaan in `localStorage`
+function showResult() {
+    questionContainer.style.display = "none";
+    submitBtn.style.display = "none";
+    resultContainer.style.display = "block";
+
+    resultEl.innerText = `Je hebt ${score} van de ${quizData[selectedCategory].length} vragen goed!`;
+    feedbackEl.innerText = score === quizData[selectedCategory].length ? "Geweldig gedaan!" : "Goed geprobeerd!";
+    restartBtn.style.display = "block";
+
+    // Sla de vragen en correcte antwoorden op in localStorage
+    localStorage.setItem('quizAnswers', JSON.stringify(quizAnswers));
+
+    saveScoreToLeaderboard(userName, score);
+    displayLeaderboard();
+}
+
